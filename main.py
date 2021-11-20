@@ -4,10 +4,6 @@ import binascii
 import terminal
 import crypto
 
-def print_hello():
-  for i in range(1,1_000_000):
-    print("test")
-
 def read_from_file(file_name):
   with open(f"input/{file_name}", "r") as file:
     text = file.read()
@@ -24,13 +20,16 @@ formated_output = terminal.format_output(str(hex_msg)[2:-1], block_length)
 colored_output = terminal.color(formated_output)
 
 key = b"rick astley goat"
+iv = b"asfir34qgbtr834g"
+bytes_msg = crypto.add_padding(bytes_msg)
+
 encrypted = crypto.encrypt_ECB(bytes_msg, key)
 decrypted = crypto.decrypt_ECB(encrypted, key)
-
+encrypted_CBC = crypto.encrypt_CBC(bytes_msg, key, iv)
+decrypted_CBC = crypto.decrypt_CBC(encrypted_CBC, key, iv)
 
 terminal.print_output(input_msg, "input")
-terminal.print_output(hex_msg, "hex")
-terminal.print_output(formated_output, "formated")
-terminal.print_output(colored_output, "colored")
-terminal.print_output(encrypted, "encrypted")
-terminal.print_output(str(decrypted), "decrypted")
+terminal.print_output(encrypted, "encrypted ECB")
+terminal.print_output(decrypted[:-decrypted[-1]], "decrypted ECB")
+terminal.print_output(encrypted_CBC, "encrypted CBC")
+terminal.print_output(decrypted_CBC[:-decrypted_CBC[-1]], "decrypted CBC")
