@@ -36,11 +36,22 @@ def decrypt_CBC(msg, key, init_vector):
     previous_block = current_block
   return output
 
-def test_en_CBC(msg, key, init_vector):
-  aes = AES.new(key, AES.MODE_CBC, init_vector)
-  print(f"en cbc test {msg}")
-  return aes.encrypt(msg)
+def encrypt_PBC(msg, key, init_vector):
+  output = b""
+  previous_block = init_vector
+  for i in range(0, len(msg), 16):
+    current_block = msg[i:i+16]
+    encrypted_block = encrypt_ECB(xor(current_block, previous_block), key)
+    output += encrypted_block
+    previous_block = current_block
+  return output
 
-def test_de_CBC(msg, key, init_vector):
-  aes = AES.new(key, AES.MODE_CBC, init_vector)
-  return aes.decrypt(msg)
+def decrypt_PBC(msg, key, init_vector):
+  output = b""
+  previous_block = init_vector
+  for i in range(0, len(msg), 16):
+    current_block = msg[i:i+16]
+    decrypted = xor(decrypt_ECB(current_block, key), previous_block)
+    output += decrypted
+    previous_block = decrypted
+  return output

@@ -25,6 +25,8 @@ def print_modes():
   print("2. Decrypt ECB")
   print("3. Encrypt CBC")
   print("4. Decrypt CBC")
+  print("5. Encrypt PBC")
+  print("6. Decrypt PBC")
 
 def print_files(mode):
   if mode % 2 == 0:

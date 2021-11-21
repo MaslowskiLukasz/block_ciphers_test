@@ -33,6 +33,21 @@ def CBC_decrypt(bytes_msg):
   terminal.print_output(decrypted[:-decrypted[-1]], "decrypted CBC")
   files.save_to_file("output/", "CBC_de_"+file_name, decrypted)
 
+def PBC_encrypt(bytes_msg):
+  if len(bytes_msg) % 16 != 0:
+    bytes_msg = crypto.add_padding(bytes_msg)
+  encrypted = crypto.encrypt_PBC(bytes_msg, key, iv)
+  terminal.print_output(encrypted, "encrypted PBC")
+  files.save_to_file("output/", "PBC_en_"+file_name, encrypted)
+
+def PBC_decrypt(bytes_msg):
+  if len(bytes_msg) % 16 != 0:
+    bytes_msg = crypto.add_padding(bytes_msg)
+  decrypted = crypto.decrypt_PBC(bytes_msg, key, iv)
+  terminal.print_output(decrypted[:-decrypted[-1]], "decrypted PBC")
+  files.save_to_file("output/", "PBC_de_"+file_name, decrypted)
+
+
 terminal.print_modes()
 mode = int(input("Select mode: "))
 print(mode)
@@ -55,6 +70,12 @@ elif mode == 3:
   print(time)
 elif mode == 4:
   time = timeit.timeit(lambda: CBC_decrypt(bytes_msg), number=1)
+  print(time)
+elif mode == 5:
+  time = timeit.timeit(lambda: PBC_encrypt(bytes_msg), number=1)
+  print(time)
+elif mode == 6:
+  time = timeit.timeit(lambda: PBC_decrypt(bytes_msg), number=1)
   print(time)
 else:
   print("Wrong mode")
