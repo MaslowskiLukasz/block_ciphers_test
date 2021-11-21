@@ -13,6 +13,8 @@ def ECB_encrypt(bytes_msg):
   files.save_to_file("output/", "ECB_en_"+file_name, encrypted)
 
 def ECB_decrypt(bytes_msg):
+  if len(bytes_msg) % 16 != 0:
+    bytes_msg = crypto.add_padding(bytes_msg)
   decrypted = crypto.decrypt_ECB(bytes_msg, key)
   terminal.print_output(decrypted[:-decrypted[-1]], "decrypted ECB")
   files.save_to_file("output/", "ECB_de_"+file_name, decrypted)
@@ -25,6 +27,8 @@ def CBC_encrypt(bytes_msg):
   files.save_to_file("output/", "CBC_en_"+file_name, encrypted)
 
 def CBC_decrypt(bytes_msg):
+  if len(bytes_msg) % 16 != 0:
+    bytes_msg = crypto.add_padding(bytes_msg)
   decrypted = crypto.decrypt_CBC(bytes_msg, key, iv)
   terminal.print_output(decrypted[:-decrypted[-1]], "decrypted CBC")
   files.save_to_file("output/", "CBC_de_"+file_name, decrypted)

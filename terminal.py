@@ -9,7 +9,7 @@ def color(text):
   output = ""
   for i in range(0, len(arr)):
     if i % 2 == 0:
-      output += colored(arr[i], "cyan") + " "
+      output += colored(arr[i], "red") + " "
     else:
       output += colored(arr[i], "green") + " "
   return output
