@@ -17,7 +17,7 @@ def ECB_decrypt(bytes_msg):
     bytes_msg = crypto.add_padding(bytes_msg)
   decrypted = crypto.decrypt_ECB(bytes_msg, key)
   terminal.print_output(decrypted[:-decrypted[-1]], "decrypted ECB")
-  files.save_to_file("output/", "ECB_de_"+file_name, decrypted)
+  files.save_to_file("output/", "ECB_de_"+file_name, decrypted[:-decrypted[-1]])
 
 def CBC_encrypt(bytes_msg):
   if len(bytes_msg) % 16 != 0:
